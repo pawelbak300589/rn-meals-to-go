@@ -17,7 +17,7 @@ const RestaurantList = styled(FlatList).attrs({
 })``;
 
 const RestaurantsScreen = (props) => {
-  const restaurantContext = useContext(RestaurantsContext);
+  const { isLoading, error, restaurants } = useContext(RestaurantsContext);
 
   return (
     <SafeArea>
@@ -25,12 +25,14 @@ const RestaurantsScreen = (props) => {
         <Searchbar />
       </SearchContainer>
       <RestaurantList
-        data={restaurantContext.restaurants}
-        renderItem={(item) => (
-          <Spacer position="bottom" size="large">
-            <RestaurantInfoCard />
-          </Spacer>
-        )}
+        data={restaurants}
+        renderItem={({ item }) => {
+          return (
+            <Spacer position="bottom" size="large">
+              <RestaurantInfoCard restaurant={item} />
+            </Spacer>
+          );
+        }}
         keyExtractor={(item) => item.name}
       />
     </SafeArea>
